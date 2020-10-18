@@ -1,0 +1,9 @@
+﻿/*all button with the same width*/
+.btn {
+    width: 75px;
+}
+
+.imageThumbnail {
+    height: 200px;
+    width: auto;
+}
