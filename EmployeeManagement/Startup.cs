@@ -40,8 +40,11 @@ namespace EmployeeManagement
                 options.Password.RequiredLength = 7;
             }).AddEntityFrameworkStores<AppDbContext>();*/
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options=>
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
 
             //I dont Know the use of this line
             //apply authhorize attribute globally
