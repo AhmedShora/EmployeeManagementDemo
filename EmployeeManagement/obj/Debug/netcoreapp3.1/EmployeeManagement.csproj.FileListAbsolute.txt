@@ -99,3 +99,8 @@ C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcore
 C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Facebook.dll
 C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\EmployeeManagement.csproj.CoreCompileInputs.cache
 C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\EmployeeManagement.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\ConfirmEmail.cshtml.g.cs
+C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPassword.cshtml.g.cs
+C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPasswordConfirmation.cshtml.g.cs
+C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
+C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPasswordConfirmation.cshtml.g.cs

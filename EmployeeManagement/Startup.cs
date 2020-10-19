@@ -40,10 +40,12 @@ namespace EmployeeManagement
                 options.Password.RequiredLength = 7;
             }).AddEntityFrameworkStores<AppDbContext>();*/
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options=>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
-            }).AddEntityFrameworkStores<AppDbContext>();
+            }).AddEntityFrameworkStores<AppDbContext>()
+              .AddDefaultTokenProviders();
+
 
 
             //I dont Know the use of this line
