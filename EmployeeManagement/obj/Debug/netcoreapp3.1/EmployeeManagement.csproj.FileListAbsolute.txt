@@ -108,3 +108,4 @@ C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcore
 C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\ChangePasswordConfirmation.cshtml.g.cs
 C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\AddPassword.cshtml.g.cs
 C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\AddPasswordConfirmation.cshtml.g.cs
+C:\Users\hp\source\repos\EmployeeManagement\EmployeeManagement\obj\Debug\netcoreapp3.1\Razor\Views\Account\AccountLocked.cshtml.g.cs

@@ -156,7 +156,7 @@ namespace EmployeeManagement.Controllers
                 }
 
                 var result = await signInManager.PasswordSignInAsync(model.Email,
-                                        model.Password, model.RememberMe, false);
+                                        model.Password, model.RememberMe, true);
 
                 if (result.Succeeded)
                 {
@@ -168,6 +168,11 @@ namespace EmployeeManagement.Controllers
                     {
                         return RedirectToAction("index", "home");
                     }
+                }
+                // If account is lockedout send the use to AccountLocked view
+                if (result.IsLockedOut)
+                {
+                    return View("AccountLocked");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
@@ -360,6 +365,10 @@ namespace EmployeeManagement.Controllers
                     // var result = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
                     if (result.Succeeded)
                     {
+                        if (await userManager.IsLockedOutAsync(user))
+                        {
+                            await userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
+                        }
                         return View("ResetPasswordConfirmation");
                     }
                     // Display validation errors. For example, password reset token already
