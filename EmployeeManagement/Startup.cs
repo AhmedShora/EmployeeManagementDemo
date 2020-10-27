@@ -46,9 +46,10 @@ namespace EmployeeManagement
             }).AddEntityFrameworkStores<AppDbContext>()
               .AddDefaultTokenProviders();
 
+            //Change lifeTimeSpan
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+                    o.TokenLifespan = TimeSpan.FromHours(4));
 
-
-            //I dont Know the use of this line
             //apply authhorize attribute globally
             services.AddMvc(confiq =>
             {
@@ -56,11 +57,13 @@ namespace EmployeeManagement
                 .RequireAuthenticatedUser().Build();
                 confiq.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
+
             //Change Acess Denied Path
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
             });
+
             //claim based Authorization
             services.AddAuthorization(options =>
             {
@@ -107,6 +110,7 @@ namespace EmployeeManagement
 
             services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
+            services.AddSingleton<DataProtectionPurposeStrings>();
 
 
 

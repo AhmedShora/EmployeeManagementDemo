@@ -1,6 +1,8 @@
 ﻿using EmployeeManagement.Models;
+using EmployeeManagement.Security;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,28 +18,42 @@ namespace EmployeeManagement.Controllers
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IDataProtector protector;
 
-        public HomeController(IEmployeeRepository employeeRepository, IWebHostEnvironment webHostEnvironment)
+
+        public HomeController(IEmployeeRepository employeeRepository, IWebHostEnvironment webHostEnvironment, IDataProtectionProvider dataProtectionProvider,
+                              DataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
             this.employeeRepository = employeeRepository;
             this.webHostEnvironment = webHostEnvironment;
+            protector = dataProtectionProvider.CreateProtector(
+               dataProtectionPurposeStrings.EmployeeIdRouteValue);
         }
         //ViewResult Vs ActionResult
         [AllowAnonymous]
         public ViewResult Index()
         {
-            var model = employeeRepository.GetAllEmployees();
+            var model = employeeRepository.GetAllEmployees().Select(e =>
+            {
+                // Encrypt the ID value and store in EncryptedId property
+                e.EncryptedId = protector.Protect(e.Id.ToString());
+                return e;
+            });
             return View(model);
         }
         [AllowAnonymous]
-        public ViewResult Details(int? id)
+        public ViewResult Details(string id)
         {
-           // throw new Exception("Error in Details");
-            var employee = employeeRepository.GetEmployee(id.Value);
-            if (employee == null) 
+            // throw new Exception("Error in Details");
+            // Decrypt the employee id using Unprotect method
+            string decryptedId = protector.Unprotect(id);
+            int decryptedIntId = Convert.ToInt32(decryptedId);
+            var employee = employeeRepository.GetEmployee(decryptedIntId);
+
+            if (employee == null)
             {
                 Response.StatusCode = 404;
-                return View("EmployeeNotFound",id.Value);
+                return View("EmployeeNotFound", decryptedIntId);
             }
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel
             {
@@ -116,7 +132,7 @@ namespace EmployeeManagement.Controllers
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream= new FileStream(filePath, FileMode.Create))
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     model.Photo.CopyTo(fileStream);
 
